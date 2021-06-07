@@ -21,7 +21,7 @@ def dj_circuit(N, uf_gate):
     #Negate last Qubit
     circuit.append(cirq.X(qubits[N-1]))
 
-    #Apply Hadamar to all 
+    #Apply Hadamard to all 
     for i in range(N):
         moment.append(cirq.H(qubits[i]))
     moment = AppendMoment(moment, circuit)
@@ -29,7 +29,7 @@ def dj_circuit(N, uf_gate):
     #Apply Oracle
     AppendUf(uf_gate, qubits, circuit)
 
-    #Apply Hadamar to all N first 
+    #Apply Hadamard to all N first 
     for i in range(N-1):
         moment.append(cirq.H(qubits[i]))
     moment = AppendMoment(moment, circuit)
