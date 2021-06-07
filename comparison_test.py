@@ -56,6 +56,7 @@ for r in range(0, num_qubits):
             matrix[r][c] = hamming_distance(qubits[r], qubits[c]) / iterations
 
 heatmap = np.matrix(matrix)
+mask = np.triu(heatmap) # this masks out the upper triangular 
 print(heatmap)
 
 # using matplotlib
@@ -63,5 +64,6 @@ print(heatmap)
 
 # using seaborn
 labels = [x for x in range(1, num_qubits+1)]
-ax = sns.heatmap(heatmap, linewidth=0.5, annot=True, xticklabels=labels, yticklabels=labels)
+# get rid of mask parameter to stop masking out upper triangular
+ax = sns.heatmap(heatmap, linewidth=0.5, annot=True, xticklabels=labels, yticklabels=labels, mask=mask)
 plt.show()
