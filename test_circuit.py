@@ -95,25 +95,74 @@ def run_DJ(n, f=None, repetitions=1):
   uf_gate = Uf(generate_Uf(f, n), n+1)
 
   dj = dj_circuit(n, uf_gate)
-  print("DJ, n = {}".format(n))
-  print(f"Using f={f}")
-  print(dj)
+  # print("DJ, n = {}".format(n))
+  # print(f"Using f={f}")
+  # print(dj)
   simulator = cirq.Simulator()
   tic = time.perf_counter()
   result = simulator.run(dj, repetitions=repetitions)
+  # print(result)
 
-  measurement = []
-  for q in result.measurements.values():
-    measurement.append(str(q[0][0]))
-  if ''.join(measurement) == '0'*n:
-    print("constant")
-  else:
-    print("balanced")
+  # measurement = []
+  # for q in result.measurements.values():
+  #   measurement.append(str(q[0][0]))
+  # if ''.join(measurement) == '0'*n:
+  #   print("constant")
+  # else:
+  #   print("balanced")
   toc = time.perf_counter()
   t = toc - tic
-  return result, t
+  return result, t, dj
 
-N=3
-result, t = run_DJ(N)
-print(result)
-print("time: ", t)
+# N=10
+# result, t, dj = run_DJ(N)
+# print(result)
+# print("time: ", t)
+
+def simon_circuit(N):
+  moment = []
+  
+  qubits = []
+  # qubits = cirq.LineQubit.range(2*N)
+  qubits.append(cirq.GridQubit(3,3))
+  qubits.append(cirq.GridQubit(1,4))
+  qubits.append(cirq.GridQubit(2,3))
+  qubits.append(cirq.GridQubit(3,4))
+  qubits.append(cirq.GridQubit(1,5))
+  qubits.append(cirq.GridQubit(2,4))
+  
+  circuit = cirq.Circuit()
+
+  #Apply Hadamar to first N Qubits
+  for i in range(N):
+    moment.append(cirq.H(qubits[i]))
+  moment = AppendMoment(moment, circuit)
+  
+  # HARD CODED, example from qiskit. Code = '110'
+  moment.append(cirq.CNOT(qubits[0], qubits[3]))
+  moment = AppendMoment(moment, circuit)
+
+  moment.append(cirq.CNOT(qubits[1], qubits[4]))
+  moment = AppendMoment(moment, circuit)
+  
+  moment.append(cirq.CNOT(qubits[2], qubits[5]))
+  moment = AppendMoment(moment, circuit)
+  
+  moment.append(cirq.CNOT(qubits[1], qubits[4]))
+  moment = AppendMoment(moment, circuit)
+  
+  moment.append(cirq.CNOT(qubits[1], qubits[5]))
+  moment = AppendMoment(moment, circuit)
+
+  #Apply Hadamar to first N Qubits
+  for i in range(N):
+    moment.append(cirq.H(qubits[i]))
+  moment = AppendMoment(moment, circuit)
+
+  #Edit: Only need to measure first N bits
+  #Measure all N first
+  for i in range(N):
+    moment.append(cirq.measure(qubits[i]))
+  moment = AppendMoment(moment, circuit)
+
+  return circuit

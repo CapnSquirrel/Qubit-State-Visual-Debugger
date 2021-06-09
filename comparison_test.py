@@ -53,7 +53,7 @@ matrix = [[-0.1 for i in range(num_qubits)] for j in range(num_qubits)]
 for r in range(0, num_qubits):
     for c in range(0, num_qubits):
         if r != c: 
-            matrix[r][c] = hamming_distance(qubits[r], qubits[c]) / iterations
+            matrix[r][c] = hamming_distance(qubits[r], qubits[c]) / iterations # division to place values between 0 and 1
 
 heatmap = np.matrix(matrix)
 mask = np.triu(heatmap) # this masks out the upper triangular 
