@@ -10,10 +10,25 @@ def hamming_distance(chaine1, chaine2):
 
 '''
 Given a circuit, visualize the qubit relationships via repeated simulation
+iterations is the number of times simulation is run, higher yields better results
+measure_insert is default to None; supply a moment index to have the debugger insert measurement gates at that moment
 '''
-def debug(circuit, iterations=1000):
+def debug(circuit, iterations=1000, measure_insert=None):
     # simulate the circuit
     print(circuit)
+
+    if measure_insert != None:
+        qs = circuit.all_qubits()
+
+        for i, gate in enumerate(circuit.moments):
+            if 'M' in str(gate):
+                circuit.clear_operations_touching(qs, [i])
+
+        measurements = [cirq.measure(q) for q in qs]
+        circuit.insert(measure_insert, measurements)
+        print("Updated measurement gates: ")
+        print(circuit)
+
     simulator = cirq.Simulator()
     result = simulator.run(circuit, repetitions=iterations)
     
