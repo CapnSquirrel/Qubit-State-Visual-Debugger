@@ -166,3 +166,14 @@ def simon_circuit(N):
   moment = AppendMoment(moment, circuit)
 
   return circuit
+
+def entangled_circuit():
+  circuit = cirq.Circuit()
+  (q0, q1) = cirq.LineQubit.range(2)
+  # Apply the X-Pauli gate to each qubit
+  circuit.append([cirq.X(q0), cirq.X(q1)])
+  # Apply the Hadamard gate to first qubit and CNOT gate to both qubits
+  circuit.append([cirq.H(q0), cirq.CNOT(q0, q1)])
+  circuit.append([cirq.measure(q0), cirq.measure(q1)])
+  
+  return circuit

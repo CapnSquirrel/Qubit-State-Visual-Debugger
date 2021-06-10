@@ -2,7 +2,7 @@ import cirq
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-from test_circuit import simon_circuit
+import test_circuit
 
 # Given two sequences of length n, calculate hamming distance between the two. 
 def hamming_distance(chaine1, chaine2):
@@ -44,7 +44,4 @@ def debug(circuit, iterations=1000):
     ax = sns.heatmap(heatmap, linewidth=0.5, annot=True, xticklabels=labels, yticklabels=labels)
     plt.show()
 
-
-
-
-debug(simon_circuit(3))
+debug(test_circuit.entangled_circuit())
