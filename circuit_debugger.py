@@ -3,6 +3,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import test_circuit
+import shor_code
 
 # Given two sequences of length n, calculate hamming distance between the two. 
 def hamming_distance(chaine1, chaine2):
@@ -20,10 +21,12 @@ def debug(circuit, iterations=1000, measure_insert=None):
     if measure_insert != None:
         qs = circuit.all_qubits()
 
+        # remove existing measurement gates
         for i, gate in enumerate(circuit.moments):
             if 'M' in str(gate):
                 circuit.clear_operations_touching(qs, [i])
 
+        # add new measurement gates and show updated circuit
         measurements = [cirq.measure(q) for q in qs]
         circuit.insert(measure_insert, measurements)
         print("Updated measurement gates: ")
@@ -59,4 +62,5 @@ def debug(circuit, iterations=1000, measure_insert=None):
     ax = sns.heatmap(heatmap, linewidth=0.5, annot=True, xticklabels=labels, yticklabels=labels)
     plt.show()
 
-debug(test_circuit.entangled_circuit())
+# weird measurements inserted, but there were no measurements to begin with...
+debug(shor_code.make_circuit())
