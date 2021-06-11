@@ -40,6 +40,7 @@ def debug(circuit, iterations=1000, measure_insert=None):
     for q in result.measurements.values():
         bit_string = ""
         for measurement in q:
+            # randomly flip measurement to simulate error
             bit_string += str(measurement[0])
         qubits.append(bit_string)
 
@@ -63,4 +64,9 @@ def debug(circuit, iterations=1000, measure_insert=None):
     plt.show()
 
 # weird measurements inserted, but there were no measurements to begin with...
-debug(shor_code.make_circuit())
+# debug(shor_code.make_circuit(), measure_insert=6)
+
+# result, t, dj = test_circuit.run_DJ(5)
+# debug(dj)
+
+# debug(test_circuit.simon_circuit(4))
