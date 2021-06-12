@@ -7,18 +7,20 @@ import math
 # test circuits, not dependencies
 import test_circuit
 import shor_code
+import grover
 
 
 # Given two sequences of length n, calculate hamming distance between the two.
 def hamming_distance(chaine1, chaine2):
     return sum(c1 != c2 for c1, c2 in zip(chaine1, chaine2))
 
-'''
-Given a circuit, visualize the qubit relationships via repeated simulation
-iterations is the number of times simulation is run, higher yields better results
-measure_insert is default to None; supply a moment index to have the debugger insert measurement gates at that moment
-'''
+
 def debug(circuit, iterations=1000, measure_insert=None, kind = "qubit_entanglement" ):
+    '''
+    Given a circuit, visualize the qubit relationships via repeated simulation
+    iterations is the number of times simulation is run, higher yields better results
+    measure_insert is default to None; supply a moment index to have the debugger insert measurement gates at that moment
+    '''
     # simulate the circuit
     print(circuit)
 
@@ -115,9 +117,6 @@ def debug(circuit, iterations=1000, measure_insert=None, kind = "qubit_entanglem
 
       matrix = [[dic[r + c*row] for r in range(row)] for c in range(col)]
 
-      #print(dic)
-      #print(matrix)
-
       heatmap = np.matrix(matrix)
       # using seaborn
       labels_x = [x for x in range(col)]
@@ -133,6 +132,6 @@ def debug(circuit, iterations=1000, measure_insert=None, kind = "qubit_entanglem
 # result, t, dj = test_circuit.run_DJ(5)
 # debug(dj)
 
-debug(shor_code.make_circuit(), kind = "state_superposition")
-# debug(shor_code.make_circuit(), kind = "qubit_superposition")
-# debug(shor_code.make_circuit(), kind = "qubit_entanglement")
+debug(grover.main(), kind = "state_superposition")
+debug(grover.main(), kind = "qubit_superposition")
+debug(grover.main(), kind = "qubit_entanglement")

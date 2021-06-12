@@ -177,3 +177,17 @@ def entangled_circuit():
   circuit.append([cirq.measure(q0), cirq.measure(q1)])
   
   return circuit
+
+def hadamard_circuit(N):
+  qubits = cirq.LineQubit.range(N)
+  circuit = cirq.Circuit()
+  moment = []
+  for i in range(N):
+      moment.append(cirq.H(qubits[i]))
+      moment.append(cirq.measure(qubits[i]))
+  moment = AppendMoment(moment, circuit)
+
+
+  return circuit
+
+  
