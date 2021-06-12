@@ -3,9 +3,11 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import random
+import math
+# test circuits, not dependencies
 import test_circuit
 import shor_code
-import math
+
 
 # Given two sequences of length n, calculate hamming distance between the two.
 def hamming_distance(chaine1, chaine2):
