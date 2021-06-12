@@ -115,9 +115,10 @@ def debug(circuit, iterations=1000, measure_insert=None, kind = "qubit_entanglem
 
       heatmap = np.matrix(matrix)
       # using seaborn
-      labels = [x for x in range(num_qubits)]
+      labels_x = [x for x in range(col)]
+      labels_y = [x for x in range(row)]
       # get rid of mask parameter to stop masking out upper triangular
-      ax = sns.heatmap(heatmap, linewidth=0.5, annot=True, xticklabels=labels, yticklabels=labels, vmin = -0.1, vmax = 1.0)
+      ax = sns.heatmap(heatmap, linewidth=0.5, annot=True, xticklabels=labels_x, yticklabels=labels_y, vmin = -0.1, vmax = 1.0)
       plt.title("State Superposition")
       plt.show()
 
