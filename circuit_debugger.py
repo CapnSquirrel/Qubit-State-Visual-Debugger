@@ -2,6 +2,7 @@ import cirq
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+import random
 import test_circuit
 import shor_code
 import math
@@ -42,6 +43,8 @@ def debug(circuit, iterations=1000, measure_insert=None, kind = "qubit_entanglem
         bit_string = ""
         for measurement in q:
             # randomly flip measurement to simulate error
+            # if random.random() < 0.01:
+            #     measurement[0] = 0 if measurement[0] == 1 else 1
             bit_string += str(measurement[0])
         qubits.append(bit_string)
 
@@ -121,12 +124,12 @@ def debug(circuit, iterations=1000, measure_insert=None, kind = "qubit_entanglem
       plt.title("State Superposition")
       plt.show()
 
-
-
 # weird measurements inserted, but there were no measurements to begin with...
-# debug(shor_code.make_circuit(), measure_insert=6)
+# debug(shor_code.make_circuit())
 
 # result, t, dj = test_circuit.run_DJ(5)
 # debug(dj)
 
-debug(test_circuit.simon_circuit(4), iterations = 20, kind = "state_superposition")
+debug(shor_code.make_circuit(), kind = "state_superposition")
+# debug(shor_code.make_circuit(), kind = "qubit_superposition")
+# debug(shor_code.make_circuit(), kind = "qubit_entanglement")
