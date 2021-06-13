@@ -2,18 +2,11 @@ import cirq
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-import random
 import math
-# test circuits, not dependencies
-import test_circuit
-import shor_code
-import grover
-
 
 # Given two sequences of length n, calculate hamming distance between the two.
 def hamming_distance(chaine1, chaine2):
     return sum(c1 != c2 for c1, c2 in zip(chaine1, chaine2))
-
 
 def debug(circuit, iterations=1000, measure_insert=None, kind = "qubit_entanglement" ):
     '''
@@ -46,9 +39,6 @@ def debug(circuit, iterations=1000, measure_insert=None, kind = "qubit_entanglem
     for q in result.measurements.values():
         bit_string = ""
         for measurement in q:
-            # randomly flip measurement to simulate error
-            # if random.random() < 0.01:
-            #     measurement[0] = 0 if measurement[0] == 1 else 1
             bit_string += str(measurement[0])
         qubits.append(bit_string)
 
@@ -125,13 +115,3 @@ def debug(circuit, iterations=1000, measure_insert=None, kind = "qubit_entanglem
       ax = sns.heatmap(heatmap, linewidth=0.5, annot=True, xticklabels=labels_x, yticklabels=labels_y, vmin = -0.1, vmax = 1.0)
       plt.title("State Superposition")
       plt.show()
-
-# weird measurements inserted, but there were no measurements to begin with...
-# debug(shor_code.make_circuit())
-
-# result, t, dj = test_circuit.run_DJ(5)
-# debug(dj)
-
-debug(grover.main(), kind = "state_superposition")
-debug(grover.main(), kind = "qubit_superposition")
-debug(grover.main(), kind = "qubit_entanglement")
